@@ -13,7 +13,6 @@ users = {}
 @bot.message_handler(commands=['start'])
 def start_message(message):
     user_id = message.from_user.id
-    print(user_id)
     # Проверка пользователя
     check = db.checker(user_id)
     if check:
@@ -118,7 +117,7 @@ def cart_handle(call):
         bot.edit_message_text('Ваша корзина пуста, выберите новый товар', chat_id=chat_id,
                               message_id=call.message.message_id, reply_markup=bt.main_menu_buttons(products))
     elif call.data == 'order':
-        group_id = -4118474963
+        group_id = 4118474963
         cart = db.make_order(chat_id)
         print(cart)
         text = f'Новый заказ!\n\n' \
@@ -147,7 +146,7 @@ def cart_handle(call):
 
 
 # Вывод информации о продукте
-@bot.callback_query_handler(lambda call: int(call.data) in db.get_pr_but()[0])
+@bot.callback_query_handler(lambda call: int(call.data) in db.get_pr_name_id())
 def get_user_product(call):
     chat_id = call.message.chat.id
     prod = db.get_pr(int(call.data))
@@ -164,7 +163,7 @@ def get_user_product(call):
 # Обработка команды admin
 @bot.message_handler(commands=['admin'])
 def act(message):
-    admin_id = 2041805598
+    admin_id = 1981760307
     if message.from_user.id == admin_id:
         bot.send_message(admin_id, 'Выберите действие', reply_markup=bt.admin_menu())
         # Переход на этап выбора
@@ -175,7 +174,7 @@ def act(message):
 
 # Выбор действия админом
 def admin_choose(message):
-    admin_id = 2041805598
+    admin_id = 1981760307
     if message.text == 'Добавить продукт':
         bot.send_message(admin_id, 'Напишите название продукта!',
                          reply_markup=telebot.types.ReplyKeyboardRemove())
@@ -217,7 +216,7 @@ def admin_choose(message):
 
 # Этап получения названия продукта
 def get_pr_name(message):
-    admin_id = 2041805598
+    admin_id = 1981760307
     if message.text:
         pr_name = message.text
         bot.send_message(admin_id, 'Отлично, теперь придумайте описание!')
@@ -231,7 +230,7 @@ def get_pr_name(message):
 
 # Этап получения описания
 def get_pr_des(message, pr_name):
-    admin_id = 2041805598
+    admin_id = 1981760307
     if message.text:
         pr_des = message.text
         bot.send_message(admin_id, 'Теперь введите количество товара')
@@ -245,7 +244,7 @@ def get_pr_des(message, pr_name):
 
 # Этап получения кол-ва
 def get_pr_count(message, pr_name, pr_des):
-    admin_id = 2041805598
+    admin_id = 1981760307
     try:
         pr_count = int(message.text)
         bot.send_message(admin_id, 'А сейчас перейдите на сайт https://postimages.org/ru/, загрузите фото '
@@ -260,7 +259,7 @@ def get_pr_count(message, pr_name, pr_des):
 
 # Этап получения фото
 def get_pr_photo(message, pr_name, pr_des, pr_count):
-    admin_id = 2041805598
+    admin_id = 1981760307
     if message.text:
         pr_photo = message.text
         bot.send_message(admin_id, 'Супер, последний штрих: какова цена товара?')
@@ -274,7 +273,7 @@ def get_pr_photo(message, pr_name, pr_des, pr_count):
 
 # Этап получения цены
 def get_pr_price(message, pr_name, pr_des, pr_count, pr_photo):
-    admin_id = 2041805598
+    admin_id = 1981760307
     try:
         pr_price = float(message.text)
         db.add_pr(pr_name, pr_des, pr_count, pr_photo, pr_price)
@@ -290,7 +289,7 @@ def get_pr_price(message, pr_name, pr_des, pr_count, pr_photo):
 
 # Этап удаления продукта:
 def get_pr_id(message):
-    admin_id = 2041805598
+    admin_id = 1981760307
     try:
         pr_id = int(message.text)
         check = db.check_pr_id(pr_id)
@@ -312,7 +311,7 @@ def get_pr_id(message):
 
 # Этап изменения кол-ва товара
 def get_pr_change(message):
-    admin_id = 2041805598
+    admin_id = 1981760307
     try:
         pr_id = int(message.text)
         check = db.check_pr_id(pr_id)
@@ -332,7 +331,7 @@ def get_pr_change(message):
 
 # Этап прихода
 def get_amount(message, pr_id):
-    admin_id = 2041805598
+    admin_id = 1981760307
     try:
         new_amount = int(message.text)
         db.change_pr_count(pr_id, new_amount)
